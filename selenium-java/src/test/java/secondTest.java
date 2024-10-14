@@ -185,40 +185,20 @@ public class secondTest {
     public void sevenTask() {
         driver.get("http://localhost/litecart");
         // WebElement element;
-        List<WebElement> yellowDuck = driver.findElements(By.cssSelector("#box-most-popular a[title='Yellow Duck'] div.sticker.sale"));
-        if (yellowDuck.size() == 1) {
-            System.out.println("Элемент " + yellowDuck + "найден и он единственный.");
-        } else {
-            System.out.println("Найдено элементов: " + yellowDuck.size());
-        }
+        List<WebElement> products = driver.findElements(By.cssSelector(".product"));
+        System.out.println(products);
 
-        List<WebElement> greenDucks = driver.findElements(By.cssSelector("#box-most-popular a[title='Green Duck'] div.sticker.new"));
-        if (greenDucks.size() == 1) {
-            System.out.println("Элемент " + greenDucks + "найден и он единственный.");
-        } else {
-            System.out.println("Найдено элементов: " + greenDucks.size());
-        }
-
-        List<WebElement> blueDucks = driver.findElements(By.cssSelector("#box-most-popular a[title='Blue Duck'] div.sticker.new"));
-        if (blueDucks.size() == 1) {
-            System.out.println("Элемент " + blueDucks + "найден и он единственный.");
-        } else {
-            System.out.println("Найдено элементов: " + blueDucks.size());
-        }
-
-        List<WebElement> redDucks = driver.findElements(By.cssSelector("#box-most-popular a[title='Red Duck'] div.sticker.new"));
-        if (redDucks.size() == 1) {
-            System.out.println("Элемент найден и он единственный.");
-        } else {
-            System.out.println("Найдено элементов: " + redDucks.size());
-        }
-
-        List<WebElement> purpleDucks = driver.findElements(By.cssSelector("#box-most-popular a[title='Purple Duck'] div.sticker.new"));
-        if (purpleDucks.size() == 1) {
-            System.out.println("Элемент найден и он единственный.");
-        } else {
-            System.out.println("Найдено элементов: " + purpleDucks.size());
-        }
+            // 3) Проверить наличие ровно одного стикера у каждого товара
+            for (WebElement product : products) {
+                List<WebElement> stickers = product.findElements(By.cssSelector(".sticker"));
+                
+                // Проверка, что у товара ровно один стикер
+                if (stickers.size() == 1) {
+                    System.out.println("Товар имеет ровно один стикер: OK");
+                } else {
+                    System.out.println("Товар не соответствует требованию: найдено " + stickers.size() + " стикеров.");
+                }
+            }
     }
 
     @AfterAll
