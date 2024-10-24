@@ -7,6 +7,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.JavascriptExecutor;
@@ -17,7 +19,8 @@ public class task11 {
 
     @BeforeAll
     public static void start() {
-        driver = new ChromeDriver();
+        // driver = new ChromeDriver();
+        driver = new FirefoxDriver();
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
@@ -34,16 +37,18 @@ public class task11 {
         driver.findElement(By.name("postcode")).sendKeys("12345");
         driver.findElement(By.name("city")).sendKeys("New York");
 
-        WebElement countryDropdown = driver.findElement(By.name("country_code"));
-        Select selectCountry = new Select(countryDropdown);
-        selectCountry.selectByVisibleText("United States");
+        WebElement countryDropdown = driver.findElement(By.cssSelector("span.select2-selection__rendered"));
+        countryDropdown.click();
+        WebElement searchField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("select2-search__field")));
+        searchField.sendKeys("United States");
+        driver.findElement(By.xpath("//li[text()='United States']")).click();
 
         WebElement stateDropdown = driver.findElement(By.name("zone_code"));
         // Проверяем, является ли элемент видимым и доступным для взаимодействия
-if (stateDropdown.isDisplayed() && stateDropdown.isEnabled()) {
-    String tagName = stateDropdown.getTagName().toLowerCase();
+        if (stateDropdown.isDisplayed() && stateDropdown.isEnabled()) {
+        String tagName = stateDropdown.getTagName().toLowerCase();
     
-    if (tagName.equals("select")) {
+        if (tagName.equals("select")) {
         // Если это select, используем JavaScript для выбора опции
         String optionValue = "значение_опции"; 
         String script = "arguments[0].value = '" + optionValue + "'; " +
