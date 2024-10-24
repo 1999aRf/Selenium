@@ -36,7 +36,8 @@ public class task12 {
         driver.findElement(By.linkText("Add New Product")).click();
 
         driver.findElement(By.cssSelector("input[name='status'][value='1']")).click();
-        driver.findElement(By.name("name[en]")).sendKeys("My New Product");
+        String uniqueProductName = "My New Product " + System.currentTimeMillis();
+        driver.findElement(By.name("name[en]")).sendKeys(uniqueProductName);
         driver.findElement(By.name("code")).sendKeys("12345");
 
         List<WebElement> categories = driver.findElements(By.name("categories[]"));
@@ -77,7 +78,7 @@ public class task12 {
 
         driver.findElement(By.name("save")).click();
 
-        driver.findElement(By.linkText("My New Product")); 
+        driver.findElement(By.linkText(uniqueProductName)); 
         System.out.println("Товар успешно добавлен!");
     }
 
